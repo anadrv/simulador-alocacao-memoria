@@ -45,6 +45,7 @@ public class Main {
 
         Memoria memoria = new Memoria();
         GeradorDeProcessos gerador = new GeradorDeProcessos();
+        NextFit nextFit = new NextFit();
 
         List<Processo> processosNaMemoria = new ArrayList<>();
         Random random = new Random();
@@ -68,7 +69,7 @@ public class Main {
 
                     case 2:
                         // Next Fit
-                        // alocado = nextFit.alocar(memoria, processo);
+                        alocado = nextFit.alocar(memoria, processo);
                         break;
 
                     case 3:
