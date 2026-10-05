@@ -47,6 +47,7 @@ public class Main {
         GeradorDeProcessos gerador = new GeradorDeProcessos();
         NextFit nextFit = new NextFit();
         WorstFit worstFit = new WorstFit();
+        BestFit bestFit = new BestFit();
 
         List<Processo> processosNaMemoria = new ArrayList<>();
         Random random = new Random();
@@ -75,7 +76,7 @@ public class Main {
 
                     case 3:
                         // Best Fit
-                        // alocado = bestFit.alocar(memoria, processo);
+                        alocado = bestFit.alocar(memoria, processo);
                         break;
 
                     case 4:
