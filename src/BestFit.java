@@ -1,11 +1,18 @@
 public class BestFit {
 
+    private Memoria.Bloco ultimoBloco;
+
     public boolean alocar(Memoria memoria, Processo processo) {
 
-        Memoria.Bloco atual = memoria.getInicio();
+        if (ultimoBloco == null) {
+            ultimoBloco = memoria.getInicio();
+        }
+
+        Memoria.Bloco inicioBusca = ultimoBloco;
+        Memoria.Bloco atual = ultimoBloco;
         Memoria.Bloco menorBloco = null;
 
-        while (atual != null) {
+        do {
 
             if (atual.estaLivre()
                     && atual.getTamanho() >= processo.getTamanho()) {
@@ -18,7 +25,12 @@ public class BestFit {
             }
 
             atual = atual.getProximo();
-        }
+
+            if (atual == null) {
+                atual = memoria.getInicio();
+            }
+
+        } while (atual != inicioBusca);
 
         if (menorBloco == null) {
             return false;
@@ -26,8 +38,13 @@ public class BestFit {
 
         memoria.alocar(processo, menorBloco);
 
+        ultimoBloco = menorBloco.getProximo();
+
+        if (ultimoBloco == null) {
+            ultimoBloco = memoria.getInicio();
+        }
+
         return true;
     }
 }
-
 
