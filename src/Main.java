@@ -15,11 +15,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n-- Simulador Alocação de Memória K-pop 3/5 --");
-        System.out.print("\nescolha o algoritmo: ");
         System.out.println("\n1 - First Fit");
         System.out.println("2 - Next Fit");
         System.out.println("3 - Best Fit");
         System.out.println("4 - Worst Fit");
+        System.out.print("\nescolha o algoritmo: ");
 
         int opcao = scanner.nextInt();
 
@@ -58,9 +58,6 @@ public class Main {
                     "\nExecução " + execucao + "/" + QUANTIDADE_EXECUCOES);
 
             Memoria memoria = new Memoria();
-
-            System.out.println("\nEstado inicial da memória:");
-            memoria.mostrarMemoria();
 
             GeradorDeProcessos gerador = new GeradorDeProcessos();
 
@@ -188,11 +185,9 @@ public class Main {
             );
         }
 
-
         double mediaGlobalTamanho = somaTamanhoMedio / QUANTIDADE_EXECUCOES;
         double mediaGlobalOcupacao = somaOcupacaoMedia / QUANTIDADE_EXECUCOES;
         double mediaGlobalDescarte = somaTaxaDescarte / QUANTIDADE_EXECUCOES;
-
 
         System.out.println("\n-- Média Global --");
 
