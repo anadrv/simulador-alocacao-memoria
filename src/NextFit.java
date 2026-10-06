@@ -1,27 +1,24 @@
 public class NextFit {
 
-    private Memoria.Bloco ultimoBloco;
+    private int proximaPosicao = 0;
 
     public boolean alocar(Memoria memoria, Processo processo) {
 
-        if (ultimoBloco == null) {
-            ultimoBloco = memoria.getInicio();
-        }
+        Memoria.Bloco inicioBusca = encontrarBloco(memoria, proximaPosicao);
 
-        Memoria.Bloco inicioBusca = ultimoBloco;
-        Memoria.Bloco atual = ultimoBloco;
+        Memoria.Bloco atual = inicioBusca;
 
         do {
 
-            if (atual.estaLivre()
-                    && atual.getTamanho() >= processo.getTamanho()) {
+            if (atual.estaLivre() && atual.getTamanho() >= processo.getTamanho()) {
+
+                int novaPosicao = atual.getInicio() + processo.getTamanho();
 
                 memoria.alocar(processo, atual);
+                proximaPosicao = novaPosicao;
 
-                ultimoBloco = atual.getProximo();
-
-                if (ultimoBloco == null) {
-                    ultimoBloco = memoria.getInicio();
+                if (proximaPosicao >= memoria.getTamanho()) {
+                    proximaPosicao = 0;
                 }
 
                 return true;
@@ -36,5 +33,24 @@ public class NextFit {
         } while (atual != inicioBusca);
 
         return false;
+    }
+
+    private Memoria.Bloco encontrarBloco(Memoria memoria, int posicao) {
+
+        Memoria.Bloco atual = memoria.getInicio();
+
+        while (atual != null) {
+
+            int inicio = atual.getInicio();
+            int fim = inicio + atual.getTamanho();
+
+            if (posicao >= inicio && posicao < fim) {
+                return atual;
+            }
+
+            atual = atual.getProximo();
+        }
+
+        return memoria.getInicio();
     }
 }
