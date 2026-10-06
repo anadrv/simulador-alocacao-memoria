@@ -42,18 +42,14 @@ public class Memoria {
 
             if (atual.estaLivre()) {
 
-                System.out.println(
-                        "Bloco livre | Início: " + atual.getInicio()
-                                + " | Tamanho: " + atual.getTamanho()
-                );
+                System.out.println("Bloco livre | Início: " + atual.getInicio()
+                                + " | Tamanho: " + atual.getTamanho());
 
             } else {
 
-                System.out.println(
-                        "Processo " + atual.getProcesso().getId()
+                System.out.println("Processo " + atual.getProcesso().getId()
                                 + " | Início: " + atual.getInicio()
-                                + " | Tamanho: " + atual.getTamanho()
-                );
+                                + " | Tamanho: " + atual.getTamanho());
 
                 memoriaOcupada += atual.getTamanho();
             }
@@ -64,7 +60,6 @@ public class Memoria {
         int memoriaLivre = TAMANHO_MEMORIA - memoriaOcupada;
 
         System.out.println();
-        System.out.println("Memória total: " + TAMANHO_MEMORIA);
         System.out.println("Memória ocupada: " + memoriaOcupada);
         System.out.println("Memória livre: " + memoriaLivre);
     }
@@ -125,10 +120,8 @@ public class Memoria {
 
         if (tamanhoRestante > 0) {
 
-            Bloco novoBloco = new Bloco(
-                    bloco.getInicio() + processo.getTamanho(),
-                    tamanhoRestante
-            );
+            Bloco novoBloco = new Bloco(bloco.getInicio() + processo.getTamanho(),
+                    tamanhoRestante);
 
             novoBloco.setProximo(bloco.getProximo());
             bloco.setProximo(novoBloco);
@@ -141,13 +134,10 @@ public class Memoria {
 
         while (atual != null) {
 
-            if (!atual.estaLivre()
-                    && atual.getProcesso().getId() == id) {
+            if (!atual.estaLivre() && atual.getProcesso().getId() == id) {
 
                 atual.setProcesso(null);
-
                 juntarBlocosLivres();
-
                 return true;
             }
 
@@ -167,10 +157,7 @@ public class Memoria {
 
             if (atual.estaLivre() && proximo.estaLivre()) {
 
-                atual.setTamanho(
-                        atual.getTamanho() + proximo.getTamanho()
-                );
-
+                atual.setTamanho(atual.getTamanho() + proximo.getTamanho());
                 atual.setProximo(proximo.getProximo());
 
             } else {
@@ -178,7 +165,4 @@ public class Memoria {
             }
         }
     }
-
-
-
 }
