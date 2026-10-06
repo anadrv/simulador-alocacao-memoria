@@ -16,27 +16,57 @@ public class Memoria {
         return inicio;
     }
 
-    public void mostrarMemoria() {
+    public int getMemoriaOcupada() {
 
         Bloco atual = inicio;
+        int memoriaOcupada = 0;
 
         while (atual != null) {
 
-            if (atual.estaLivre()) {
-                System.out.println(
-                        "Livre | Inicio: " + atual.getInicio()
-                                + " | Tamanho: " + atual.getTamanho()
-                );
-            } else {
-                System.out.println(
-                        "Processo " + atual.getProcesso().getId()
-                                + " | Inicio: " + atual.getInicio()
-                                + " | Tamanho: " + atual.getTamanho()
-                );
+            if (!atual.estaLivre()) {
+                memoriaOcupada += atual.getTamanho();
             }
 
             atual = atual.getProximo();
         }
+
+        return memoriaOcupada;
+    }
+
+    public void mostrarMemoria() {
+
+        Bloco atual = inicio;
+        int memoriaOcupada = 0;
+
+        while (atual != null) {
+
+            if (atual.estaLivre()) {
+
+                System.out.println(
+                        "Bloco livre | Início: " + atual.getInicio()
+                                + " | Tamanho: " + atual.getTamanho()
+                );
+
+            } else {
+
+                System.out.println(
+                        "Processo " + atual.getProcesso().getId()
+                                + " | Início: " + atual.getInicio()
+                                + " | Tamanho: " + atual.getTamanho()
+                );
+
+                memoriaOcupada += atual.getTamanho();
+            }
+
+            atual = atual.getProximo();
+        }
+
+        int memoriaLivre = TAMANHO_MEMORIA - memoriaOcupada;
+
+        System.out.println();
+        System.out.println("Memória total: " + TAMANHO_MEMORIA);
+        System.out.println("Memória ocupada: " + memoriaOcupada);
+        System.out.println("Memória livre: " + memoriaLivre);
     }
 
     public static class Bloco {
@@ -116,6 +146,8 @@ public class Memoria {
 
                 atual.setProcesso(null);
 
+                juntarBlocosLivres();
+
                 return true;
             }
 
@@ -124,4 +156,29 @@ public class Memoria {
 
         return false;
     }
+
+    private void juntarBlocosLivres() {
+
+        Bloco atual = inicio;
+
+        while (atual != null && atual.getProximo() != null) {
+
+            Bloco proximo = atual.getProximo();
+
+            if (atual.estaLivre() && proximo.estaLivre()) {
+
+                atual.setTamanho(
+                        atual.getTamanho() + proximo.getTamanho()
+                );
+
+                atual.setProximo(proximo.getProximo());
+
+            } else {
+                atual = atual.getProximo();
+            }
+        }
+    }
+
+
+
 }
