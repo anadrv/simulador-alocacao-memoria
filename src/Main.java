@@ -45,6 +45,7 @@ public class Main {
 
         Memoria memoria = new Memoria();
         GeradorDeProcessos gerador = new GeradorDeProcessos();
+        FirstFit firstFit = new FirstFit();
         NextFit nextFit = new NextFit();
         WorstFit worstFit = new WorstFit();
         BestFit bestFit = new BestFit();
@@ -66,7 +67,7 @@ public class Main {
 
                     case 1:
                         // First Fit
-                        // alocado = firstFit.alocar(memoria, processo);
+                        alocado = firstFit.alocar(memoria, processo);
                         break;
 
                     case 2:
@@ -80,8 +81,8 @@ public class Main {
                         break;
 
                     case 4:
-                         //Worst Fit
-                         //alocado = worstFit.alocar(memoria, processo);
+                        //Worst Fit
+                        alocado = worstFit.alocar(memoria, processo);
                         break;
                 }
 
